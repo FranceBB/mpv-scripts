@@ -14,6 +14,7 @@ local opts = {
     -- showspectrum
     -- showcqtbar
     -- showwaves
+    -- showvolume
 
     quality = "medium",
     -- verylow
@@ -45,6 +46,7 @@ local visualizer_name_list = {
     "showspectrum",
     "showcqtbar",
     "showwaves",
+    "showvolume",
 }
 
 local axis_0 = "image/png;base64," ..
@@ -250,6 +252,18 @@ local function get_visualizer(name, quality, vtrack)
                 "size           =" .. w .. "x" .. h .. ":" ..
                 "r              =" .. fps .. ":" ..
                 "mode           = p2p," ..
+            "format             = rgb0 [vo]"
+    elseif name == "showvolume" then
+        return "[aid1] asplit [ao]," ..
+            "showvolume          =" ..
+            "w                   =" .. w/2 .. ":" ..
+            "h                   =" .. h/8 .. ":" ..
+            "r                   =" .. 10 .. ":" ..
+            "m                   =p" .. ":" ..
+            "t                   =false" .. ":" ..
+            "f                   =0.8" .. ":" ..
+            "ds                  =log" .. ":" ..
+            "dm                  =1," ..
             "format             = rgb0 [vo]"
     elseif name == "off" then
         local hasvideo = false
